@@ -1,0 +1,22 @@
+# Vivado temporary and log files
+*.log
+*.jou
+*.str
+.Xil/
+*.pb
+*.dir/
+
+# Vivado project specific generated directories
+/UART.cache/
+/UART.hw/
+/UART.ip_user_files/
+/UART.sim/
+
+# bitstreams or hardware exports later
+*.bit
+*.bin
+*.xsa
+
+# OS specific files
+Thumbs.db
+.DS_Store
