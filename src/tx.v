@@ -15,7 +15,6 @@ module tx (
     reg[1:0] currentState,nextState;
     reg[2:0] bitCounter;
     reg[7:0] shiftReg;
-    reg shiftBit;
     //currentState Logic
     always @(posedge clk or posedge reset) begin
         if(reset)begin
@@ -36,7 +35,7 @@ module tx (
                 if(baudTick)nextState = DATA;
             end
             DATA:begin
-                if(baudTick && bitCounter == 7) nextState = STOP;
+                if(baudTick && bitCounter == 7'd0) nextState = STOP;
             end
             STOP:begin
                 if(baudTick)begin
@@ -52,21 +51,18 @@ module tx (
     always @(posedge clk or posedge reset)begin
         if(reset)begin
             shiftReg <= 0;
-            shiftBit <= 0;
             bitCounter <= 0;
         end else begin
-            if(currentState == START)begin
+            if(nextState == START && (currentState == IDLE || currentState == STOP) )begin
                 shiftReg<=data;
                 bitCounter<=0;
             end else if(currentState == DATA)begin
                 if(baudTick)begin
-                    shiftBit<=shiftReg[0];//LSB first
                     shiftReg <= shiftReg >> 1;
                     bitCounter <= bitCounter + 1;
                 end
             end else begin
                 shiftReg<=0;
-                shiftBit<=0;
                 bitCounter<=0;
             end
         end
@@ -78,7 +74,7 @@ module tx (
         case(currentState)
             IDLE: txData = 1'b1;
             START: txData = 1'b0;
-            DATA: txData = shiftBit;
+            DATA: txData = shiftReg[0];
             STOP: txData = 1'b1;
             default: txData = 1'b1;
         endcase
