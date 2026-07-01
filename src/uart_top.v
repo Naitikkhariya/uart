@@ -9,11 +9,15 @@ module uart_top#(
     output wire txDone,
     output wire txBusy,
     output wire baudTick,
-    output wire txData
+    output wire txData,
+    output wire [7:0]rxData,
+    output wire rxDone,
+    output wire rxBusy
 );
 
-    baud inst(.clk(clk),.reset(reset),.baudTick(baudTick));
-    tx inst1(.clk(clk),.reset(reset),.data(data),
+    baud baud_inst(.clk(clk),.reset(reset),.baudTick(baudTick));
+    tx tx_inst(.clk(clk),.reset(reset),.data(data),
     .baudTick(baudTick),.txStart(txStart),.txDone(txDone),.txData(txData),.txBusy(txBusy));
-
+    rx rx_inst(.clk(clk),.reset(reset),.txData(txData),
+    .baudTick(baudTick),.rxData(rxData),.rxDone(rxDone),.rxBusy(rxBusy));
 endmodule

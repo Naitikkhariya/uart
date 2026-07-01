@@ -9,6 +9,8 @@ module testbench;
     wire txDone;
     wire txBusy;
     wire txData;
+    wire rxBusy,rxDone;
+    wire [7:0] rxData;
     initial clk = 0;
     always #5 clk = ~clk;
 
@@ -20,7 +22,10 @@ module testbench;
         .txDone(txDone),
         .txBusy(txBusy),
         .baudTick(baudTick),
-        .txData(txData)
+        .txData(txData),
+        .rxBusy(rxBusy),
+        .rxData(rxData),
+        .rxDone(rxDone)
     );
 
     // Corrected Task
