@@ -35,7 +35,7 @@ module tx (
                 if(baudTick)nextState = DATA;
             end
             DATA:begin
-                if(baudTick && bitCounter == 7'd0) nextState = STOP;
+                if(baudTick && bitCounter == 3'd7) nextState = STOP;
             end
             STOP:begin
                 if(baudTick)begin
@@ -61,9 +61,6 @@ module tx (
                     shiftReg <= shiftReg >> 1;
                     bitCounter <= bitCounter + 1;
                 end
-            end else begin
-                shiftReg<=0;
-                bitCounter<=0;
             end
         end
     end

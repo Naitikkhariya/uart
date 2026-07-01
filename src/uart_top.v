@@ -4,9 +4,16 @@ module uart_top#(
 )(
     input wire clk,
     input wire reset,
-    output wire baudTick
+    input wire [7:0]data,
+    input wire txStart,
+    output wire txDone,
+    output wire txBusy,
+    output wire baudTick,
+    output wire txData
 );
 
     baud inst(.clk(clk),.reset(reset),.baudTick(baudTick));
+    tx inst1(.clk(clk),.reset(reset),.data(data),
+    .baudTick(baudTick),.txStart(txStart),.txDone(txDone),.txData(txData),.txBusy(txBusy));
 
 endmodule
