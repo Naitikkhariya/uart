@@ -64,12 +64,12 @@ module testbench;
     endtask
 
     initial begin
-        // --- 1. System Reset ---
+        //1. System Reset
         $display("Applying Reset...");
         txtest(1'b1, 1'b0, 8'd0);
         #20; 
 
-        // --- 2. Test Case 1: Transmitting 8'd11 ---
+        // 2. Test Case 1: Transmitting 8'd11
         $display("\nSending Data 11...");
         txtest(1'b0, 1'b1, 8'd11); // txStart HIGH
         txtest(1'b0, 1'b0, 8'd11); // txStart LOW (Creates exactly 1 clock cycle pulse)
@@ -78,7 +78,7 @@ module testbench;
 
         #100; // Chota sa gap between transmissions
 
-        // --- 3. Test Case 2: Transmitting 8'b10101010 ---
+        //3. Test Case 2: Transmitting 8'b10101010
         $display("\nSending Data 170 (10101010)...");
         txtest(1'b0, 1'b1, 8'b10101010);
         txtest(1'b0, 1'b0, 8'b10101010);
